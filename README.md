@@ -70,6 +70,34 @@ taskScheduler.WaitForAll();
 taskScheduler.CheckTaskCompletion(task);
 ```
 
+##### Create a task scheduler with profiler callbacks:
+```c#
+ProfilerCallback threadStart = (thread) => {
+	Console.WriteLine("Thread " + thread + " started!");
+};
+
+ProfilerCallback threadStop = (thread) => {
+	Console.WriteLine("Thread " + thread + " stopped!");
+};
+
+ProfilerCallback waitStart = (thread) => {
+	Console.WriteLine("Thread " + thread + " is waiting...");
+};
+
+ProfilerCallback waitStop = (thread) => {
+	Console.WriteLine("Thread " + thread + " is resumed!");
+};
+
+ProfilerCallbacks profilerCallbacks = new ProfilerCallbacks();
+
+profilerCallbacks.threadStart = threadStart.GetPointer();
+profilerCallbacks.threadStop = threadStop.GetPointer();
+profilerCallbacks.waitStart = waitStart.GetPointer(); 
+profilerCallbacks.waitStop = waitStop.GetPointer();
+
+TaskScheduler taskScheduler = new TaskScheduler(profilerCallbacks);
+```
+
 API reference
 --------
 ### Delegates
@@ -107,7 +135,7 @@ Contains a managed pointer to the enkiTS instance and profiler callbacks.
 `TaskScheduler(uint threadsCount, ProfilerCallbacks? profilerCallbacks)` 
 
 ##### Properties
-`TaskScheduler.Threads` 
+`TaskScheduler.Threads` gets the number of threads.
 
 ##### Methods
 `TaskScheduler.Dispose()` 
