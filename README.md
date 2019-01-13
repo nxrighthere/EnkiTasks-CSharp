@@ -16,7 +16,59 @@ Usage
 --------
 ##### Create a new task scheduler:
 
+```c#
+// The number of threads will be set automatically
+TaskScheduler taskScheduler = new TaskScheduler();
+```
 
+##### Destroy the task scheduler:
+```c#
+taskScheduler.Dispose();
+````
+
+##### Define a parallel function:
+```c#
+TaskExecuteRange taskFunction = (start, end, thread, arguments) => {
+	Console.WriteLine("Task is running on the thread: " + thread);
+};
+````
+
+##### Get a pointer to the parallel function:
+```c#
+// Can be obtained once and reused further
+IntPtr function = taskFunction.GetPointer();
+```
+
+##### Create a new task:
+```c#
+IntPtr task = taskScheduler.CreateTask(function);
+```
+
+##### Schedule the task:
+```c#
+// 16 operations will be executed and processed
+taskScheduler.ScheduleTask(task, 16);
+```
+
+##### Handle completion of the task:
+```c#
+// Main thread is free to continue any logic or may be involved in the task until completion
+taskScheduler.WaitForTask(task);
+
+// Involve main thread in all tasks
+taskScheduler.WaitForAll();
+```
+
+##### Check completion of the task:
+```c#
+// If the main thread is not involved in task it's possible to check task completion at any time
+taskScheduler.CheckTaskCompletion(task);
+```
+
+##### Delete the task:
+```c#
+taskScheduler.DeleteTask(task);
+```
 
 API reference
 --------
