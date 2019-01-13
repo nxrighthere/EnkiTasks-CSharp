@@ -93,7 +93,7 @@ Contains a managed pointer to the enkiTS instance and profiler callbacks.
 ##### Constructors
 `TaskScheduler(ProfilerCallbacks profilerCallbacks)` 
 
-`TaskScheduler(uint threadsCount = 0, ProfilerCallbacks? profilerCallbacks = null)` 
+`TaskScheduler(uint threadsCount = 0, ProfilerCallbacks? profilerCallbacks)` 
 
 ##### Properties
 `TaskScheduler.Threads` 
