@@ -72,6 +72,17 @@ taskScheduler.CheckTaskCompletion(task);
 
 API reference
 --------
+### Delegates
+#### Parallel function 
+Defines a parallel function for task scheduler.
+
+`TaskExecuteRange(uint start, uint end, uint thread, IntPtr arguments)` 
+
+#### Profiler callback
+Provides per task scheduler events.
+
+`ProfilerCallback(uint thread)` 
+
 ### Structures
 #### ProfilerCallbacks
 Contains a managed pointers to the profiler callback functions.
@@ -93,7 +104,7 @@ Contains a managed pointer to the enkiTS instance and profiler callbacks.
 ##### Constructors
 `TaskScheduler(ProfilerCallbacks profilerCallbacks)` 
 
-`TaskScheduler(uint threadsCount = 0, ProfilerCallbacks? profilerCallbacks)` 
+`TaskScheduler(uint threadsCount, ProfilerCallbacks? profilerCallbacks)` 
 
 ##### Properties
 `TaskScheduler.Threads` 
