@@ -55,7 +55,7 @@ taskScheduler.ScheduleTask(task, 16);
 // Main thread is free to continue any logic or may be involved in the task until completion
 taskScheduler.WaitForTask(task);
 
-// Involve main thread in all tasks
+// Involve main thread in all scheduled tasks
 taskScheduler.WaitForAll();
 ```
 
@@ -72,4 +72,3 @@ taskScheduler.DeleteTask(task);
 
 API reference
 --------
-
