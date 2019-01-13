@@ -44,6 +44,11 @@ IntPtr function = taskFunction.GetPointer();
 IntPtr task = taskScheduler.CreateTask(function);
 ```
 
+##### Delete the task:
+```c#
+taskScheduler.DeleteTask(task);
+```
+
 ##### Schedule the task:
 ```c#
 // 16 operations will be executed and processed
@@ -65,10 +70,30 @@ taskScheduler.WaitForAll();
 taskScheduler.CheckTaskCompletion(task);
 ```
 
-##### Delete the task:
-```c#
-taskScheduler.DeleteTask(task);
-```
-
 API reference
 --------
+### Structures
+#### ProfilerCallbacks
+Contains a managed pointers to the profiler callback functions.
+
+`ProfilerCallbacks.threadStart` 
+
+`ProfilerCallbacks.threadStop` 
+
+`ProfilerCallbacks.waitStart` 
+
+`ProfilerCallbacks.waitStop` 
+
+### Classes
+A single low-level disposable class is used to work with enkiTS.
+
+#### TaskScheduler
+Contains a managed pointer to the enkiTS instance and profiler callbacks.
+
+##### Constructors
+
+
+##### Properties
+`TaskScheduler.Threads` 
+
+##### Methods
