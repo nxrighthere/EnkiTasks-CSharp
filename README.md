@@ -91,9 +91,24 @@ A single low-level disposable class is used to work with enkiTS.
 Contains a managed pointer to the enkiTS instance and profiler callbacks.
 
 ##### Constructors
+`TaskScheduler(ProfilerCallbacks profilerCallbacks)` 
 
+`TaskScheduler(uint threadsCount = 0, ProfilerCallbacks? profilerCallbacks = null)` 
 
 ##### Properties
 `TaskScheduler.Threads` 
 
 ##### Methods
+`TaskScheduler.Dispose()` 
+
+`TaskScheduler.CreateTask(IntPtr task)` 
+
+`TaskScheduler.DeleteTask(IntPtr task)` 
+
+`TaskScheduler.ScheduleTask(IntPtr task, uint setSize, IntPtr arguments)` 
+
+`TaskScheduler.CheckTaskCompletion(IntPtr task)` 
+
+`TaskScheduler.WaitForTask(IntPtr task)` 
+
+`TaskScheduler.WaitForAll()` 
