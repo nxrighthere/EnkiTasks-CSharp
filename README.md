@@ -6,16 +6,15 @@
 
 This repository provides a managed C# wrapper for [enkiTS](https://github.com/dougbinks/enkiTS) library which is created and maintained by [Doug Binks](https://github.com/dougbinks). You will need to [build](https://github.com/dougbinks/enkiTS#building) the native library before you get started.
 
-Enki Task Scheduler is a [lightweight](https://www.enkisoftware.com/devlogpost-20150905-1-Internals-of-a-lightweight-task-scheduler), [fast and scalable](https://github.com/dougbinks/enkiTS#project-features) system, designed for [task-based programming](https://www.threadingbuildingblocks.org/docs/help/tbb_userguide/Task-Based_Programming.html) which is used in [Avoyd](https://www.youtube.com/watch?v=h6ncXx-BQhs) for efficient parallelization of computations and logic.
+Enki Task Scheduler is a [lightweight](https://www.enkisoftware.com/devlogpost-20150905-1-Internals-of-a-lightweight-task-scheduler), [fast and scalable](https://www.enkisoftware.com/devlogpost-20150822-1-Implementing_a_lightweight_task_scheduler) system, designed for [task-based programming](https://www.threadingbuildingblocks.org/docs/help/tbb_userguide/Task-Based_Programming.html) which is used in [Avoyd](https://www.youtube.com/watch?v=h6ncXx-BQhs) for efficient parallelization of computations and logic.
 
 <p align="center"> 
-  <img src="https://i.imgur.com/xIcqPUN.png" alt="alt logo">
+  <img src="https://i.imgur.com/xIcqPUN.png" alt="alt logo" title="Parallelization of the recursive Fibonacci in .NET with EnkiTasks">
 </p>
-
-
 
 Usage
 --------
+##### Create a new task scheduler:
 
 
 
