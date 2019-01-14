@@ -149,7 +149,7 @@ Contains a managed pointer to the enkiTS instance and profiler callbacks.
 
 `TaskScheduler.ScheduleLongTask(IntPtr task, uint setSize, uint minRange, IntPtr arguments)` schedules a long-running task for execution and processing. The minimum range parameter should be set to a value which results in a computation effort of at least 10,000 clock cycles to minimize task scheduler overhead.
 
-`TaskScheduler.CheckTaskCompletion(IntPtr task)` checks a scheduled task for completion. Returns true if task completed or false if a job still in progress.
+`TaskScheduler.CheckTaskCompletion(IntPtr task)` checks a scheduled task for completion. Returns true if task completed or false if it's still in progress.
 
 `TaskScheduler.WaitForTask(IntPtr task)` involves the caller thread in a scheduled task and waits until completion.
 
