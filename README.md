@@ -110,7 +110,7 @@ Defines a parallel function for task scheduler.
 #### Profiler callback
 Provides per task scheduler events.
 
-`ProfilerCallback(uint thread)` notifies when profiler callback related to a particular thread come up. `ProfilerCallback.GetPointer()` can be used for obtaining a pointer to the callback function.
+`ProfilerCallback(uint thread)` notifies when profiler event related to a particular thread come up. `ProfilerCallback.GetPointer()` can be used for obtaining a pointer to the callback function.
 
 ### Structures
 #### ProfilerCallbacks
