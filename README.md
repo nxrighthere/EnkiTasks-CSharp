@@ -66,7 +66,7 @@ taskScheduler.WaitForAll();
 
 ##### Check completion of the task:
 ```c#
-// If the main thread is not involved in task it's possible to check task completion at any time
+// If the main thread is not involved in task, it's possible to check task completion at any time
 taskScheduler.CheckTaskCompletion(task);
 ```
 
@@ -145,6 +145,8 @@ Contains a managed pointer to the enkiTS instance and profiler callbacks.
 `TaskScheduler.DeleteTask(IntPtr task)` deletes a task and frees allocated memory.
 
 `TaskScheduler.ScheduleTask(IntPtr task, uint setSize, IntPtr arguments)` schedules a task for execution and processing. The number of operations can be specified using the optional set size parameter. The optional arguments parameter can be freely used for user-supplied data.
+
+`TaskScheduler.ScheduleLongTask(IntPtr task, uint setSize, uint minRange, IntPtr arguments)` schedules a long-running task for execution and processing. The minimum range parameter should be set to a value which results in a computation effort of at least 10,000 clock cycles to minimize task scheduler overhead.
 
 `TaskScheduler.CheckTaskCompletion(IntPtr task)` checks a scheduled task for completion. Can be called at any time.
 
