@@ -109,7 +109,7 @@ Defines a parallel function for task scheduler.
 #### Profiler callback
 Provides per task scheduler events.
 
-`ProfilerCallback(uint thread)` notifies when profiler callback related to a particular thread come up.
+`ProfilerCallback(uint thread)` notifies when profiler callback related to a particular thread come up. `ProfilerCallback.GetPointer()` can be used for obtaining a pointer to the callback function.
 
 ### Structures
 #### ProfilerCallbacks
@@ -142,9 +142,9 @@ Contains a managed pointer to the enkiTS instance and profiler callbacks.
 
 `TaskScheduler.CreateTask(IntPtr taskFunction)` creates a task that can be reused to get allocation occurring on startup. `TaskExecuteRange.GetPointer()` can be used for obtaining a pointer to the task function.
 
-`TaskScheduler.DeleteTask(IntPtr task)` deletes a task and frees allocated memory;
+`TaskScheduler.DeleteTask(IntPtr task)` deletes a task and frees allocated memory.
 
-`TaskScheduler.ScheduleTask(IntPtr task, uint setSize, IntPtr arguments)` schedules a task for execution and processing. The number of operations can be specified using the set size parameter. The arguments parameter can be freely used for user-supplied data.
+`TaskScheduler.ScheduleTask(IntPtr task, uint setSize, IntPtr arguments)` schedules a task for execution and processing. The number of operations can be specified using the optional set size parameter. The optional arguments parameter can be freely used for user-supplied data.
 
 `TaskScheduler.CheckTaskCompletion(IntPtr task)` checks a task for completion. Can be called at any time.
 
