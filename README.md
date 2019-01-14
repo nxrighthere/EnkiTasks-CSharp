@@ -151,6 +151,6 @@ Contains a managed pointer to the enkiTS instance and profiler callbacks.
 
 `TaskScheduler.CheckTaskCompletion(IntPtr task)` checks a scheduled task for completion. Returns true if a task completed or false if it's still in progress.
 
-`TaskScheduler.WaitForTask(IntPtr task)` involves the caller thread in a scheduled task and waits until completion.
+`TaskScheduler.WaitForTask(IntPtr task)` involves the caller thread in a scheduled task and waits for completion.
 
-`TaskScheduler.WaitForAll()` involves the caller thread in all scheduled tasks and waits until completion.
+`TaskScheduler.WaitForAll()` involves the caller thread in all scheduled tasks and waits for completion.
