@@ -105,10 +105,10 @@ API reference
 #### Parallel function 
 Defines a parallel function for task scheduler.
 
-`TaskExecuteRange(uint start, uint end, uint thread, IntPtr arguments)` holds an implementation of the parallel function which will be executed and processed by the task scheduler. You need to guarantee a lifetime of the delegate while task scheduler is doing its job. The start and end parameters indicate execution range. The thread parameter indicates in which thread the task is executed. The arguments parameter is used for user-supplied data. A pointer to the task function can be obtained using `TaskExecuteRange.GetPointer()` function.
+`TaskExecuteRange(uint start, uint end, uint thread, IntPtr arguments)` holds an implementation of the parallel function which will be executed and processed by the task scheduler. You need to guarantee a lifetime of the delegate while task scheduler is doing its job. The start and end parameters indicate execution range. The thread parameter indicates on which thread the task is executed. The arguments parameter is used for user-supplied data. A pointer to the task function can be obtained using `TaskExecuteRange.GetPointer()` function.
 
 #### Profiler callback
-Provides per task scheduler events.
+Provides per scheduler events.
 
 `ProfilerCallback(uint thread)` notifies when profiler event related to a particular thread come up. A pointer to the callback can be obtained using `ProfilerCallback.GetPointer()` function.
 
