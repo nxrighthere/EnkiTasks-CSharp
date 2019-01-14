@@ -67,7 +67,8 @@ taskScheduler.WaitForAll();
 ##### Check completion of the task:
 ```c#
 // If the main thread is not involved in task, it's possible to check task completion at any time
-taskScheduler.CheckTaskCompletion(task);
+if (taskScheduler.CheckTaskCompletion(task))
+	Console.WriteLine("Task completed!");
 ```
 
 ##### Create a task scheduler with profiler callbacks:
@@ -140,7 +141,7 @@ Contains a managed pointer to the enkiTS instance and profiler callbacks.
 ##### Methods
 `TaskScheduler.Dispose()` destroys the task scheduler instance and frees allocated memory.
 
-`TaskScheduler.CreateTask(IntPtr taskFunction)` creates a task that can be reused to get allocation occurring on startup. `TaskExecuteRange.GetPointer()` can be used for obtaining a pointer to the task function.
+`TaskScheduler.CreateTask(IntPtr taskFunction)` creates a task that can be reused to get allocation occurring on startup. `TaskExecuteRange.GetPointer()` can be used for obtaining a pointer to the task function. Returns a managed pointer to the task.
 
 `TaskScheduler.DeleteTask(IntPtr task)` deletes a task and frees allocated memory.
 
@@ -148,7 +149,7 @@ Contains a managed pointer to the enkiTS instance and profiler callbacks.
 
 `TaskScheduler.ScheduleLongTask(IntPtr task, uint setSize, uint minRange, IntPtr arguments)` schedules a long-running task for execution and processing. The minimum range parameter should be set to a value which results in a computation effort of at least 10,000 clock cycles to minimize task scheduler overhead.
 
-`TaskScheduler.CheckTaskCompletion(IntPtr task)` checks a scheduled task for completion. Can be called at any time.
+`TaskScheduler.CheckTaskCompletion(IntPtr task)` checks a scheduled task for completion. Returns true if task completed or false if a job still in progress.
 
 `TaskScheduler.WaitForTask(IntPtr task)` involves the caller thread in a scheduled task and waits until completion.
 
