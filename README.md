@@ -105,7 +105,7 @@ API reference
 #### Parallel function 
 Defines a parallel function for task scheduler.
 
-`TaskExecuteRange(uint start, uint end, uint thread, IntPtr arguments)` holds an implementation of the parallel function which will be executed and processed by the task scheduler. You need to guarantee a lifetime of the delegate while task scheduler is doing its job. The start and end parameters indicate execution range. The thread parameter indicates in which thread the task is executed. The arguments parameter is used for user-supplied data.
+`TaskExecuteRange(uint start, uint end, uint thread, IntPtr arguments)` holds an implementation of the parallel function which will be executed and processed by the task scheduler. You need to guarantee a lifetime of the delegate while task scheduler is doing its job. The start and end parameters indicate execution range. The thread parameter indicates in which thread the task is executed. The arguments parameter is used for user-supplied data. A pointer to the task function can be obtained using `TaskExecuteRange.GetPointer()` function.
 
 #### Profiler callback
 Provides per task scheduler events.
@@ -141,7 +141,7 @@ Contains a managed pointer to the enkiTS instance and profiler callbacks.
 ##### Methods
 `TaskScheduler.Dispose()` destroys the task scheduler instance and frees allocated memory.
 
-`TaskScheduler.CreateTask(IntPtr taskFunction)` creates a task that can be reused to get allocation occurring on startup. A pointer to the task function can be obtained using `TaskExecuteRange.GetPointer()` function. Returns a managed pointer to the task.
+`TaskScheduler.CreateTask(IntPtr taskFunction)` creates a task that can be reused to get allocation occurring on startup. Returns a managed pointer to the task.
 
 `TaskScheduler.DeleteTask(IntPtr task)` deletes a task and frees allocated memory.
 
