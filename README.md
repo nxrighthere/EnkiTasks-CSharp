@@ -104,24 +104,24 @@ API reference
 #### Parallel function 
 Defines a parallel function for task scheduler.
 
-`TaskExecuteRange(uint start, uint end, uint thread, IntPtr arguments)` 
+`TaskExecuteRange(uint start, uint end, uint thread, IntPtr arguments)` holds an implementation of the parallel function which will be executed and processed by the task scheduler. You need to guarantee a lifetime of the delegate while task scheduler is doing its job.
 
 #### Profiler callback
 Provides per task scheduler events.
 
-`ProfilerCallback(uint thread)` 
+`ProfilerCallback(uint thread)` notifies when profiler callback related to a particular thread come up.
 
 ### Structures
 #### ProfilerCallbacks
 Contains a managed pointers to the profiler callback functions.
 
-`ProfilerCallbacks.threadStart` 
+`ProfilerCallbacks.threadStart` indicates when thread starts.
 
-`ProfilerCallbacks.threadStop` 
+`ProfilerCallbacks.threadStop` indicates when thread stops.
 
-`ProfilerCallbacks.waitStart` 
+`ProfilerCallbacks.waitStart` indicates when thread waits.
 
-`ProfilerCallbacks.waitStop` 
+`ProfilerCallbacks.waitStop` indicates when thread resumes.
 
 ### Classes
 A single low-level disposable class is used to work with enkiTS.
@@ -130,17 +130,17 @@ A single low-level disposable class is used to work with enkiTS.
 Contains a managed pointer to the enkiTS instance and profiler callbacks.
 
 ##### Constructors
-`TaskScheduler(ProfilerCallbacks profilerCallbacks)` 
+`TaskScheduler(ProfilerCallbacks profilerCallbacks)` creates task scheduler instance with profiler callbacks.
 
-`TaskScheduler(uint threadsCount, ProfilerCallbacks? profilerCallbacks)` 
+`TaskScheduler(uint threadsCount, ProfilerCallbacks? profilerCallbacks)` creates task scheduler instance with the specified number of threads and profiler callbacks.
 
 ##### Properties
 `TaskScheduler.Threads` gets the number of threads.
 
 ##### Methods
-`TaskScheduler.Dispose()` 
+`TaskScheduler.Dispose()` destroys the task scheduler instance and frees allocated memory.
 
-`TaskScheduler.CreateTask(IntPtr task)` 
+`TaskScheduler.CreateTask(IntPtr taskFunction)` creates a task that can be reused to get allocation occurring on startup. `TaskExecuteRange.GetPointer()` can be used for obtaining a pointer to the task function.
 
 `TaskScheduler.DeleteTask(IntPtr task)` 
 
