@@ -93,7 +93,12 @@ namespace Enki.Tasks {
 		}
 
 		public IntPtr CreateTask(IntPtr taskFunction) {
-			return Native.enkiCreateTaskSet(nativeScheduler, taskFunction);
+			IntPtr task = Native.enkiCreateTaskSet(nativeScheduler, taskFunction);
+
+			if (task == IntPtr.Zero)
+				throw new InvalidOperationException("Task creation failed");
+
+			return task;
 		}
 
 		public void DeleteTask(IntPtr task) {
