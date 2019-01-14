@@ -92,8 +92,8 @@ namespace Enki.Tasks {
 				Native.enkiInitTaskSchedulerNumThreads(nativeScheduler, threadsCount);
 		}
 
-		public IntPtr CreateTask(IntPtr task) {
-			return Native.enkiCreateTaskSet(nativeScheduler, task);
+		public IntPtr CreateTask(IntPtr taskFunction) {
+			return Native.enkiCreateTaskSet(nativeScheduler, taskFunction);
 		}
 
 		public void DeleteTask(IntPtr task) {
