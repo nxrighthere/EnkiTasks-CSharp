@@ -104,7 +104,7 @@ API reference
 #### Parallel function 
 Defines a parallel function for task scheduler.
 
-`TaskExecuteRange(uint start, uint end, uint thread, IntPtr arguments)` holds an implementation of the parallel function which will be executed and processed by the task scheduler. You need to guarantee a lifetime of the delegate while task scheduler is doing its job. The start and end parameters indicate execution range. The thread parameter indicates in which thread the task executed. The arguments parameter is used for user-supplied data.
+`TaskExecuteRange(uint start, uint end, uint thread, IntPtr arguments)` holds an implementation of the parallel function which will be executed and processed by the task scheduler. You need to guarantee a lifetime of the delegate while task scheduler is doing its job. The start and end parameters indicate execution range. The thread parameter indicates in which thread the task is executed. The arguments parameter is used for user-supplied data.
 
 #### Profiler callback
 Provides per task scheduler events.
@@ -146,7 +146,7 @@ Contains a managed pointer to the enkiTS instance and profiler callbacks.
 
 `TaskScheduler.ScheduleTask(IntPtr task, uint setSize, IntPtr arguments)` schedules a task for execution and processing. The number of operations can be specified using the optional set size parameter. The optional arguments parameter can be freely used for user-supplied data.
 
-`TaskScheduler.CheckTaskCompletion(IntPtr task)` checks a task for completion. Can be called at any time.
+`TaskScheduler.CheckTaskCompletion(IntPtr task)` checks a scheduled task for completion. Can be called at any time.
 
 `TaskScheduler.WaitForTask(IntPtr task)` involves the caller thread in a scheduled task and waits until completion.
 
