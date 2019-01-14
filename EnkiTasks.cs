@@ -111,6 +111,17 @@ namespace Enki.Tasks {
 			Native.enkiAddTaskSetToPipe(nativeScheduler, task, arguments, setSize);
 		}
 
+		public void ScheduleLongTask(IntPtr task, uint setSize = 1, uint minRange = 1) {
+			ScheduleLongTask(task, setSize, minRange, IntPtr.Zero);
+		}
+
+		public void ScheduleLongTask(IntPtr task, uint setSize, uint minRange, IntPtr arguments) {
+			if (setSize == 0 || minRange == 0)
+				throw new ArgumentOutOfRangeException();
+
+			Native.enkiAddTaskSetToPipeMinRange(nativeScheduler, task, arguments, setSize, minRange);
+		}
+
 		public bool CheckTaskCompletion(IntPtr task) {
 			return Native.enkiIsTaskSetComplete(nativeScheduler, task) == 1;
 		}
@@ -164,6 +175,9 @@ namespace Enki.Tasks {
 
 		[DllImport(nativeLibrary, CallingConvention = CallingConvention.Cdecl)]
 		internal static extern void enkiAddTaskSetToPipe(IntPtr scheduler, IntPtr task, IntPtr arguments, uint setSize);
+
+		[DllImport(nativeLibrary, CallingConvention = CallingConvention.Cdecl)]
+		internal static extern void enkiAddTaskSetToPipeMinRange(IntPtr scheduler, IntPtr task, IntPtr arguments, uint setSize, uint minRange);
 		
 		[DllImport(nativeLibrary, CallingConvention = CallingConvention.Cdecl)]
 		internal static extern int enkiIsTaskSetComplete(IntPtr scheduler, IntPtr task);
