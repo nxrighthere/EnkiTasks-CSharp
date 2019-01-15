@@ -26,9 +26,6 @@ using System.Runtime.InteropServices;
 using System.Security;
 
 namespace Enki.Tasks {
-	public delegate void TaskExecuteRange(uint start, uint end, uint thread, IntPtr arguments);
-	public delegate void ProfilerCallback(uint thread);
-
 	[StructLayout(LayoutKind.Sequential)]
 	public struct ProfilerCallbacks {
 		public ProfilerCallback threadStart;
@@ -36,6 +33,9 @@ namespace Enki.Tasks {
 		public ProfilerCallback waitStart;
 		public ProfilerCallback waitStop;
 	}
+
+	public delegate void TaskExecuteRange(uint start, uint end, uint thread, IntPtr arguments);
+	public delegate void ProfilerCallback(uint thread);
 
 	public class TaskScheduler : IDisposable {
 		private IntPtr nativeScheduler;
