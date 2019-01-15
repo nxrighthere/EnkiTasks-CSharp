@@ -66,6 +66,29 @@ if (taskScheduler.CheckTaskCompletion(task))
 	Console.WriteLine("Task completed!");
 ```
 
+##### Create a task with a sub-task:
+```c#
+IntPtr task = IntPtr.Zero;
+IntPtr subTask = IntPtr.Zero;
+
+TaskExecuteRange function = (start, end, thread, arguments) => {
+	Console.WriteLine("Task is running on the thread: " + thread);
+
+	taskScheduler.ScheduleTask(subTask);
+	taskScheduler.WaitForTask(subTask);
+};
+
+TaskExecuteRange subFunction = (start, end, thread, arguments) => {
+	Console.WriteLine("Sub-task is running on the thread: " + thread);
+};
+
+task = taskScheduler.CreateTask(function);
+subTask = taskScheduler.CreateTask(subFunction);
+
+taskScheduler.ScheduleTask(task);
+taskScheduler.WaitForTask(task);
+```
+
 ##### Create a task scheduler with profiler callbacks:
 ```c#
 ProfilerCallback threadStart = (thread) => {
