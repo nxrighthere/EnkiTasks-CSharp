@@ -35,6 +35,7 @@ TaskExecuteRange function = (start, end, thread, arguments) => {
 
 ##### Create a new task:
 ```c#
+// Can be created once and re-scheduled multiple times after completion
 IntPtr task = taskScheduler.CreateTask(function);
 ```
 
