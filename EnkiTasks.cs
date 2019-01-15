@@ -31,10 +31,10 @@ namespace Enki.Tasks {
 
 	[StructLayout(LayoutKind.Sequential)]
 	public struct ProfilerCallbacks {
-		public IntPtr threadStart;
-		public IntPtr threadStop;
-		public IntPtr waitStart;
-		public IntPtr waitStop;
+		public ProfilerCallback threadStart;
+		public ProfilerCallback threadStop;
+		public ProfilerCallback waitStart;
+		public ProfilerCallback waitStop;
 	}
 
 	public class TaskScheduler : IDisposable {
@@ -92,7 +92,7 @@ namespace Enki.Tasks {
 				Native.enkiInitTaskSchedulerNumThreads(nativeScheduler, threadsCount);
 		}
 
-		public IntPtr CreateTask(IntPtr taskFunction) {
+		public IntPtr CreateTask(TaskExecuteRange taskFunction) {
 			IntPtr task = Native.enkiCreateTaskSet(nativeScheduler, taskFunction);
 
 			if (task == IntPtr.Zero)
@@ -140,22 +140,6 @@ namespace Enki.Tasks {
 		}
 	}
 
-	public static class Extensions {
-		public static IntPtr GetPointer(this TaskExecuteRange taskFunction) {
-			if (taskFunction == null)
-				throw new ArgumentNullException("taskFunction");
-
-			return Marshal.GetFunctionPointerForDelegate(taskFunction);
-		}
-
-		public static IntPtr GetPointer(this ProfilerCallback callbackFunction) {
-			if (callbackFunction == null)
-				throw new ArgumentNullException("callbackFunction");
-
-			return Marshal.GetFunctionPointerForDelegate(callbackFunction);
-		}
-	}
-
 	[SuppressUnmanagedCodeSecurity]
 	internal static class Native {
 		private const string nativeLibrary = "enkiTS";
@@ -173,7 +157,7 @@ namespace Enki.Tasks {
 		internal static extern void enkiDeleteTaskScheduler(IntPtr scheduler);
 
 		[DllImport(nativeLibrary, CallingConvention = CallingConvention.Cdecl)]
-		internal static extern IntPtr enkiCreateTaskSet(IntPtr scheduler, IntPtr taskFunction);
+		internal static extern IntPtr enkiCreateTaskSet(IntPtr scheduler, TaskExecuteRange taskFunction);
 
 		[DllImport(nativeLibrary, CallingConvention = CallingConvention.Cdecl)]
 		internal static extern void enkiDeleteTaskSet(IntPtr task);
@@ -183,7 +167,7 @@ namespace Enki.Tasks {
 
 		[DllImport(nativeLibrary, CallingConvention = CallingConvention.Cdecl)]
 		internal static extern void enkiAddTaskSetToPipeMinRange(IntPtr scheduler, IntPtr task, IntPtr arguments, uint setSize, uint minRange);
-		
+
 		[DllImport(nativeLibrary, CallingConvention = CallingConvention.Cdecl)]
 		internal static extern int enkiIsTaskSetComplete(IntPtr scheduler, IntPtr task);
 
