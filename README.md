@@ -123,7 +123,7 @@ API reference
 #### Parallel function 
 Defines a parallel function for task scheduler.
 
-`TaskExecuteRange(uint start, uint end, uint thread, IntPtr arguments)` holds an implementation of the parallel function which will be executed and processed by the task scheduler. You need to guarantee a lifetime of the delegate while task scheduler is doing its job. The start and end parameters indicate execution range. The thread parameter indicates on which thread the task is executed. The arguments parameter is used for user-supplied data.
+`TaskExecuteRange(uint start, uint end, uint thread, IntPtr arguments)` holds an implementation of the parallel function which will be executed and processed by the task scheduler. You need to guarantee a lifetime of the delegate and all dependencies while task scheduler is doing its job. The start and end parameters indicate execution range. The thread parameter indicates on which thread the task is executed. The arguments parameter is used for user-supplied data.
 
 #### Profiler callback
 Provides per scheduler events.
