@@ -41,7 +41,7 @@ TaskSet task = taskScheduler.CreateTask(function);
 
 ##### Delete the task:
 ```c#
-taskScheduler.DeleteTask(task);
+taskScheduler.DeleteTask(ref task);
 ```
 
 ##### Schedule the task:
