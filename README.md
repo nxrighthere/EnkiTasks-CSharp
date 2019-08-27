@@ -36,7 +36,7 @@ TaskExecuteRange function = (start, end, thread, arguments) => {
 ##### Create a new task:
 ```c#
 // Can be created once and re-scheduled multiple times
-IntPtr task = taskScheduler.CreateTask(function);
+TaskSet task = taskScheduler.CreateTask(function);
 ```
 
 ##### Delete the task:
@@ -68,8 +68,8 @@ if (taskScheduler.CheckTaskCompletion(task))
 
 ##### Create a task with a subtask:
 ```c#
-IntPtr task = IntPtr.Zero;
-IntPtr subTask = IntPtr.Zero;
+TaskSet task = default(TaskSet);
+TaskSet subTask = default(TaskSet);
 
 TaskExecuteRange function = (start, end, thread, arguments) => {
 	Console.WriteLine("Task is running on the thread: " + thread);
@@ -131,6 +131,11 @@ Provides per scheduler events.
 `ProfilerCallback(uint thread)` notifies when profiler event related to a particular thread come up.
 
 ### Structures
+#### TaskSet
+Contains a managed pointer to the task set.
+
+`TaskSet.IsCreated` checks if task is created.
+
 #### ProfilerCallbacks
 Contains a managed pointers to the profiler callback functions.
 
@@ -159,16 +164,16 @@ Contains a managed pointer to the enkiTS instance and profiler callbacks.
 ##### Methods
 `TaskScheduler.Dispose()` destroys the task scheduler instance and frees allocated memory.
 
-`TaskScheduler.CreateTask(IntPtr taskFunction)` creates a task that can be reused to get allocation occurring on startup. Returns a managed pointer to the task.
+`TaskScheduler.CreateTask(TaskExecuteRange taskFunction)` creates a task that can be reused to get allocation occurring on startup. Returns a `TaskSet` structure.
 
-`TaskScheduler.DeleteTask(IntPtr task)` deletes a task and frees allocated memory.
+`TaskScheduler.DeleteTask(ref TaskSet task)` deletes a task and frees allocated memory.
 
-`TaskScheduler.ScheduleTask(IntPtr task, uint setSize, IntPtr arguments)` schedules a task for execution and processing. The number of operations can be specified using the optional set size parameter. The optional arguments parameter can be freely used for user-supplied data.
+`TaskScheduler.ScheduleTask(TaskSet task, uint setSize, IntPtr arguments)` schedules a task for execution and processing. The number of operations can be specified using the optional set size parameter. The optional arguments parameter can be freely used for user-supplied data.
 
-`TaskScheduler.ScheduleLongTask(IntPtr task, uint setSize, uint minRange, IntPtr arguments)` schedules a long-running task for execution and processing. The minimum range parameter should be set to a value which results in a computation effort of at least 10,000 clock cycles to minimize task scheduler overhead.
+`TaskScheduler.ScheduleLongTask(TaskSet task, uint setSize, uint minRange, IntPtr arguments)` schedules a long-running task for execution and processing. The minimum range parameter should be set to a value which results in a computation effort of at least 10,000 clock cycles to minimize task scheduler overhead.
 
-`TaskScheduler.CheckTaskCompletion(IntPtr task)` checks a scheduled task for completion. Returns true if a task completed or false if it's still in progress.
+`TaskScheduler.CheckTaskCompletion(TaskSet task)` checks a scheduled task for completion. Returns true if a task completed or false if it's still in progress.
 
-`TaskScheduler.WaitForTask(IntPtr task)` involves the caller thread in a scheduled task and waits for completion.
+`TaskScheduler.WaitForTask(TaskSet task)` involves the caller thread in a scheduled task and waits for completion.
 
 `TaskScheduler.WaitForAll()` involves the caller thread in all scheduled tasks and waits for completion.
