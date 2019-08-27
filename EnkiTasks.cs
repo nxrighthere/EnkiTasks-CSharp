@@ -111,8 +111,10 @@ namespace Enki.Tasks {
 			return task;
 		}
 
-		public void DeleteTask(TaskSet task) {
-			Native.enkiDeleteTaskSet(task);
+		public void DeleteTask(ref TaskSet task) {
+			Native.enkiDeleteTaskSet(task.pointer);
+
+			task.pointer = IntPtr.Zero;
 		}
 
 		public void ScheduleTask(TaskSet task, uint setSize = 1) {
@@ -170,7 +172,7 @@ namespace Enki.Tasks {
 		internal static extern TaskSet enkiCreateTaskSet(IntPtr scheduler, TaskExecuteRange taskFunction);
 
 		[DllImport(nativeLibrary, CallingConvention = CallingConvention.Cdecl)]
-		internal static extern void enkiDeleteTaskSet(TaskSet task);
+		internal static extern void enkiDeleteTaskSet(IntPtr task);
 
 		[DllImport(nativeLibrary, CallingConvention = CallingConvention.Cdecl)]
 		internal static extern void enkiAddTaskSetToPipe(IntPtr scheduler, TaskSet task, IntPtr arguments, uint setSize);
