@@ -26,6 +26,16 @@ using System.Runtime.InteropServices;
 using System.Security;
 
 namespace Enki.Tasks {
+	public struct TaskSet {
+		public IntPtr pointer;
+
+		public bool IsCreated {
+			get {
+				return pointer != IntPtr.Zero;
+			}
+		}
+	}
+
 	[StructLayout(LayoutKind.Sequential)]
 	public struct ProfilerCallbacks {
 		public ProfilerCallback threadStart;
@@ -75,7 +85,7 @@ namespace Enki.Tasks {
 			nativeScheduler = Native.enkiNewTaskScheduler();
 
 			if (nativeScheduler == IntPtr.Zero)
-				throw new InvalidOperationException("Task Scheduler not created");
+				throw new InvalidOperationException("TaskSet Scheduler not created");
 
 			if (profilerCallbacks != null) {
 				nativeCallbacks = Native.enkiGetProfilerCallbacks(nativeScheduler);
@@ -92,46 +102,46 @@ namespace Enki.Tasks {
 				Native.enkiInitTaskSchedulerNumThreads(nativeScheduler, threadsCount);
 		}
 
-		public IntPtr CreateTask(TaskExecuteRange taskFunction) {
-			IntPtr task = Native.enkiCreateTaskSet(nativeScheduler, taskFunction);
+		public TaskSet CreateTask(TaskExecuteRange taskFunction) {
+			TaskSet task = Native.enkiCreateTaskSet(nativeScheduler, taskFunction);
 
-			if (task == IntPtr.Zero)
-				throw new InvalidOperationException("Task creation failed");
+			if (!task.IsCreated)
+				throw new InvalidOperationException("TaskSet creation failed");
 
 			return task;
 		}
 
-		public void DeleteTask(IntPtr task) {
+		public void DeleteTask(TaskSet task) {
 			Native.enkiDeleteTaskSet(task);
 		}
 
-		public void ScheduleTask(IntPtr task, uint setSize = 1) {
+		public void ScheduleTask(TaskSet task, uint setSize = 1) {
 			ScheduleTask(task, setSize, IntPtr.Zero);
 		}
 
-		public void ScheduleTask(IntPtr task, uint setSize, IntPtr arguments) {
+		public void ScheduleTask(TaskSet task, uint setSize, IntPtr arguments) {
 			if (setSize == 0)
 				throw new ArgumentOutOfRangeException();
 
 			Native.enkiAddTaskSetToPipe(nativeScheduler, task, arguments, setSize);
 		}
 
-		public void ScheduleLongTask(IntPtr task, uint setSize = 1, uint minRange = 1) {
+		public void ScheduleLongTask(TaskSet task, uint setSize = 1, uint minRange = 1) {
 			ScheduleLongTask(task, setSize, minRange, IntPtr.Zero);
 		}
 
-		public void ScheduleLongTask(IntPtr task, uint setSize, uint minRange, IntPtr arguments) {
+		public void ScheduleLongTask(TaskSet task, uint setSize, uint minRange, IntPtr arguments) {
 			if (setSize == 0 || minRange == 0)
 				throw new ArgumentOutOfRangeException();
 
 			Native.enkiAddTaskSetToPipeMinRange(nativeScheduler, task, arguments, setSize, minRange);
 		}
 
-		public bool CheckTaskCompletion(IntPtr task) {
+		public bool CheckTaskCompletion(TaskSet task) {
 			return Native.enkiIsTaskSetComplete(nativeScheduler, task) == 1;
 		}
 
-		public void WaitForTask(IntPtr task) {
+		public void WaitForTask(TaskSet task) {
 			Native.enkiWaitForTaskSet(nativeScheduler, task);
 		}
 
@@ -157,22 +167,22 @@ namespace Enki.Tasks {
 		internal static extern void enkiDeleteTaskScheduler(IntPtr scheduler);
 
 		[DllImport(nativeLibrary, CallingConvention = CallingConvention.Cdecl)]
-		internal static extern IntPtr enkiCreateTaskSet(IntPtr scheduler, TaskExecuteRange taskFunction);
+		internal static extern TaskSet enkiCreateTaskSet(IntPtr scheduler, TaskExecuteRange taskFunction);
 
 		[DllImport(nativeLibrary, CallingConvention = CallingConvention.Cdecl)]
-		internal static extern void enkiDeleteTaskSet(IntPtr task);
+		internal static extern void enkiDeleteTaskSet(TaskSet task);
 
 		[DllImport(nativeLibrary, CallingConvention = CallingConvention.Cdecl)]
-		internal static extern void enkiAddTaskSetToPipe(IntPtr scheduler, IntPtr task, IntPtr arguments, uint setSize);
+		internal static extern void enkiAddTaskSetToPipe(IntPtr scheduler, TaskSet task, IntPtr arguments, uint setSize);
 
 		[DllImport(nativeLibrary, CallingConvention = CallingConvention.Cdecl)]
-		internal static extern void enkiAddTaskSetToPipeMinRange(IntPtr scheduler, IntPtr task, IntPtr arguments, uint setSize, uint minRange);
+		internal static extern void enkiAddTaskSetToPipeMinRange(IntPtr scheduler, TaskSet task, IntPtr arguments, uint setSize, uint minRange);
 
 		[DllImport(nativeLibrary, CallingConvention = CallingConvention.Cdecl)]
-		internal static extern int enkiIsTaskSetComplete(IntPtr scheduler, IntPtr task);
+		internal static extern int enkiIsTaskSetComplete(IntPtr scheduler, TaskSet task);
 
 		[DllImport(nativeLibrary, CallingConvention = CallingConvention.Cdecl)]
-		internal static extern void enkiWaitForTaskSet(IntPtr scheduler, IntPtr task);
+		internal static extern void enkiWaitForTaskSet(IntPtr scheduler, TaskSet task);
 
 		[DllImport(nativeLibrary, CallingConvention = CallingConvention.Cdecl)]
 		internal static extern void enkiWaitForAll(IntPtr scheduler);
