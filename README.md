@@ -134,7 +134,9 @@ Provides per scheduler events.
 #### TaskSet
 Contains a managed pointer to the task set.
 
-`TaskSet.IsCreated` checks if task is created.
+`TaskSet.pointer` a pointer to a native memory of task.
+
+`TaskSet.IsCreated` checks if a task is created.
 
 #### ProfilerCallbacks
 Contains a managed pointers to the profiler callback functions.
