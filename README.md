@@ -14,43 +14,43 @@ Enki Task Scheduler is a [lightweight](https://www.enkisoftware.com/devlogpost-2
 
 Usage
 --------
-##### Create a new task scheduler:
+##### Create a new task scheduler
 
 ```c#
 // The number of threads will be set automatically
 TaskScheduler taskScheduler = new TaskScheduler();
 ```
 
-##### Destroy the task scheduler:
+##### Destroy the task scheduler
 ```c#
 taskScheduler.Dispose();
 ````
 
-##### Define a parallel function:
+##### Define a parallel function
 ```c#
 TaskExecuteRange function = (start, end, thread, arguments) => {
 	Console.WriteLine("Task is running on the thread: " + thread);
 };
 ````
 
-##### Create a new task:
+##### Create a new task
 ```c#
 // Can be created once and re-scheduled multiple times
 TaskSet task = taskScheduler.CreateTask(function);
 ```
 
-##### Delete the task:
+##### Delete the task
 ```c#
 taskScheduler.DeleteTask(ref task);
 ```
 
-##### Schedule the task:
+##### Schedule the task
 ```c#
 // 16 operations will be executed and processed
 taskScheduler.ScheduleTask(task, 16);
 ```
 
-##### Handle completion of the task:
+##### Handle completion of the task
 ```c#
 // Main thread is free to continue any logic or may be involved in the task until completion
 taskScheduler.WaitForTask(task);
@@ -59,14 +59,14 @@ taskScheduler.WaitForTask(task);
 taskScheduler.WaitForAll();
 ```
 
-##### Check completion of the task:
+##### Check completion of the task
 ```c#
 // If the main thread is not involved in task, it's possible to check task completion at any time
 if (taskScheduler.CheckTaskCompletion(task))
 	Console.WriteLine("Task completed!");
 ```
 
-##### Create a task with a subtask:
+##### Create a task with a subtask
 ```c#
 TaskSet task = default(TaskSet);
 TaskSet subTask = default(TaskSet);
@@ -89,7 +89,7 @@ taskScheduler.ScheduleTask(task);
 taskScheduler.WaitForTask(task);
 ```
 
-##### Create a task scheduler with profiler callbacks:
+##### Create a task scheduler with profiler callbacks
 ```c#
 ProfilerCallback threadStart = (thread) => {
 	Console.WriteLine("Thread " + thread + " started!");
